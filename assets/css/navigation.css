@@ -1,0 +1,76 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    height: 100vh;
+    min-width: 280px;
+    position: fixed;
+}
+
+.logo {
+    color: white;
+    font-size: xx-large;
+    margin: 40px 20px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 10px
+}
+
+.menu, .submenu {
+    list-style: none;
+}
+
+.menu-item {
+    position: relative;
+    padding: 5px 10px;
+}
+
+.nav-a {
+    display: block;
+    padding: 14px;
+    text-decoration: none;
+    color: white;
+    background-color: black;
+}
+
+.nav-a:hover, .menu-item.active .nav-a {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.logout-btn {
+    position: absolute; 
+    bottom: 30px; 
+    left: 20px;
+    right: 20px; 
+    padding: 14px;
+    text-align: center;
+    background-color: red;
+    color: white;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.logout-btn:hover {
+    background-color: tomato;
+}
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.menu-item:hover > .submenu,
+.nav-a:hover ~ .submenu {
+    display: block;
+}
+
+.menu-item:hover > .nav-a {
+    background-color: rgba(255, 255, 255, 0.45);
+}
+
+/* TODO: sửa lại menu-item thành bo tròn, sẽ có các vấn đề khác nảy sinh, biến .sidebar thành responsive */
