@@ -184,6 +184,30 @@
         exit();
     }
 
+    function deleteBlock($conn, $block_code) {
+        $block_code = mysqli_real_escape_string($conn, $block_code);
+    
+        $checkQuery = "SELECT block_id FROM blocks WHERE code = '$block_code'";
+        $checkResult = mysqli_query($conn, $checkQuery);
+    
+        if (mysqli_num_rows($checkResult) == 0) {
+            add_notification("Khối $block_code không tồn tại!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $deleteQuery = "DELETE FROM blocks WHERE code = '$block_code'";
+        if (mysqli_query($conn, $deleteQuery)) {
+            add_notification("Xóa khối $block_code thành công!", 5000, "success");
+        } else {
+            add_notification("Không thể xóa khối $block_code.", 5000, "error");
+        }
+    
+        header("Location: " . pageURL());
+        exit();
+    }
+    
+
     function renderBlockRow($row){
         echo "<tr>";
             echo "<td>{$row['block_id']}</td>";
@@ -200,6 +224,12 @@
                     <input type='hidden' name='block_code' value='{$row['block_code']}'>
                     <input type='text' name='subject_name_to_remove' style='width:100%'>
                 </form>
+                </td>";
+            echo "<td>
+                    <form method='post'>
+                        <input type='hidden' name='block_code_to_remove' value='{$row['block_code']}'>
+                        <input type='submit' value='Xóa khối này' class='negative-button' style='width:100%; padding: 5px;'>
+                    </form>
                 </td>";
         echo "</tr>";
     }
@@ -222,15 +252,18 @@
             }
     
             updateBS($conn, $block_code, $subject_name, $action);
+        } elseif(isset($_POST["block_code_to_remove"])){
+            deleteBlock($conn, $_POST["block_code_to_remove"]);
         } elseif(isset($_POST["new_block"])){
             createNewBlock($conn, $_POST["new_block"]);
         }
         
     }
 
-    $currentPage = isset($_GET['page_index']) ? (int)$_GET['page_index'] : 1;;
+    $currentPage = isset($_GET['page_index']) && $_GET['page_index'] > 0 ? (int)$_GET['page_index'] : 1;;
     $itemPerPage = 8;
     $offset = ($currentPage - 1) * $itemPerPage;
+    
 
     $blockQuery = buildBlockQuery($search_value, $sort_by_id, $sort_by_code, $filter_by_subject);
     $blockResult = fetchBlock($conn, $blockQuery, $itemPerPage, $offset);
@@ -241,6 +274,7 @@
     mysqli_close($conn);
 
 ?>
+
 <main>
     <h1 class="page-title">Quản lý khối</h1>
 
@@ -291,6 +325,7 @@
                     <th>Môn học</th>
                     <th>Thêm môn học</th>
                     <th>Xóa môn học</th>
+                    <th>Xóa khối</th>
                 </tr>
             </thead>
             <tbody>
@@ -300,7 +335,7 @@
                             renderBlockRow($row);
                         }
                     } else {
-                        echo "<tr><td colspan='5' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
+                        echo "<tr><td colspan='6' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
                     }
                 ?>
             </tbody>

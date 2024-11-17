@@ -1,6 +1,5 @@
 <?php
     include_once("../config/database.php");
-    include_once("../auth/session.php");
     header('Content-Type: application/json');
     
     if($_SESSION["role"] == "student"){

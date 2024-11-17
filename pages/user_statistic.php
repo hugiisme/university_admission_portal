@@ -64,11 +64,19 @@
     }
 
     function updateUserRole($conn, $user_id, $new_role){
+        $checkQuery = "SELECT role FROM users WHERE user_id = '$user_id'";
+        $checkResult = mysqli_query($conn, $checkQuery);
+        $row = mysqli_fetch_assoc($checkResult);
+        if($row["role"] == "admin"){
+            add_notification("Không thể thay đổi role cho admin khác", 5000, "error");
+            exit;
+        }
+
         $query = "UPDATE users SET role = '$new_role' WHERE user_id = $user_id";
         if (mysqli_query($conn, $query)) {
-            add_notification("Role updated successfully for user ID: $user_id.", 5000, "success");
+            add_notification("Đã cập nhật role thành công cho người dùng có id: $user_id.", 5000, "success");
         } else {
-            add_notification("Failed to update role for user ID: $user_id.", 5000, "error");
+            add_notification("Không thể cập nhật role cho người dùng có id: $user_id.", 5000, "error");
         }
 
         header("Location: " . pageURL());
@@ -101,8 +109,43 @@
                     </select>
                 </form>
             </td>";
+        echo "<td>
+                <form method='post'>
+                    <input type='hidden' name='user_id_to_delete' value='{$row['user_id']}'>
+                    <input type='submit' value='Xóa người dùng này' class='negative-button' style='width:100%; padding: 5px;'>
+                </form>
+            </td>";
 
         echo "</tr>";
+    }
+
+    function deleteUser($conn, $user_id) {
+        $user_id = mysqli_real_escape_string($conn, $user_id);
+    
+        $checkQuery = "SELECT user_id FROM users WHERE user_id = '$user_id'";
+        $checkResult = mysqli_query($conn, $checkQuery);
+    
+        if (mysqli_num_rows($checkResult) == 0) {
+            add_notification("Người dùng với ID $user_id không tồn tại!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $deleteQuery = "DELETE FROM users WHERE user_id = '$user_id'";
+        if (mysqli_query($conn, $deleteQuery)) {
+            add_notification("Xóa người dùng với ID $user_id thành công!", 5000, "success");
+            if($user_id == $_SESSION["user_id"]){
+                add_notification("Bạn vừa xóa bản thân", 5000, "success");
+                header("Location: auth/logout.php");
+                exit;
+            }
+        } else {
+            add_notification("Không thể xóa người dùng với ID $user_id.", 5000, "error");
+        }
+        
+    
+        header("Location: " . pageURL());
+        exit();
     }
 
     if ($_SERVER["REQUEST_METHOD"] === "GET"){
@@ -112,12 +155,16 @@
         $sort_by_id = $queryOption["sort_by_id"];
         $sort_by_name = $queryOption["sort_by_name"];
         $filter_by_role = $queryOption["filter_by_role"];
-    } 
-    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['user_id'], $_POST['role'])){
-        updateUserRole($conn, $_POST['user_id'], $_POST['role']);
+    } elseif ($_SERVER["REQUEST_METHOD"] === "POST"){
+        if(isset($_POST['user_id'], $_POST['role'])){
+            updateUserRole($conn, $_POST['user_id'], $_POST['role']);
+        }elseif(isset($_POST["user_id_to_delete"])){
+            deleteUser($conn, $_POST["user_id_to_delete"]);
+        }
+        
     }
 
-    $currentPage = isset($_GET['page_index']) ? (int)$_GET['page_index'] : 1;;
+    $currentPage = isset($_GET['page_index']) && $_GET['page_index'] > 0 ? (int)$_GET['page_index'] : 1;;
     $itemPerPage = 10;
     $offset = ($currentPage - 1) * $itemPerPage;
 
@@ -180,6 +227,7 @@
                     <th>Tên</th>
                     <th>Email</th>
                     <th>Vai trò</th>
+                    <th>Xóa người dùng</th>
                 </tr>
             </thead>
             <tbody>
@@ -189,7 +237,7 @@
                         renderUserRow($row);
                     }
                 } else {
-                    echo "<tr><td colspan='5' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
+                    echo "<tr><td colspan='6' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
                 }
                 ?>
             </tbody>

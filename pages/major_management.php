@@ -270,8 +270,38 @@
                     <input type='text' name='block_to_remove' style='width: 100%'>
                 </form>
             </td>";
+            echo "<td>
+                    <form method='post'>
+                        <input type='hidden' name='major_to_delete' value='{$row['major_name']}'>
+                        <input type='submit' value='Xóa ngành này' class='negative-button' style='width:100%; padding: 5px;'>
+                    </form>
+                </td>";
         echo "</tr>";
     }
+
+    function deleteMajor($conn, $major_name) {
+        $major_name = mysqli_real_escape_string($conn, $major_name);
+    
+        $checkQuery = "SELECT major_id FROM majors WHERE name = '$major_name'";
+        $checkResult = mysqli_query($conn, $checkQuery);
+    
+        if (mysqli_num_rows($checkResult) == 0) {
+            add_notification("Ngành $major_name không tồn tại!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $deleteQuery = "DELETE FROM majors WHERE name = '$major_name'";
+        if (mysqli_query($conn, $deleteQuery)) {
+            add_notification("Xóa ngành $major_name thành công!", 5000, "success");
+        } else {
+            add_notification("Không thể xóa ngành $major_name.", 5000, "error");
+        }
+    
+        header("Location: " . pageURL());
+        exit();
+    }
+    
 
     if ($_SERVER["REQUEST_METHOD"] === "GET"){
         $queryOption = initializeQueryOptions();
@@ -293,7 +323,7 @@
             }
 
             updateMB($conn, $major_name, $block_name, $action);
-        }elseif(isset($_POST["new_major"])){
+        } elseif(isset($_POST["new_major"])){
             createNewMajor($conn, $_POST["new_major"]);
         } elseif(isset($_POST["new_start_date"]) || isset($_POST["new_end_date"])){
             if(isset($_POST["new_start_date"])){
@@ -304,10 +334,12 @@
                 $date = $_POST["new_end_date"];
             }
             updateMajorTime($conn, $major_name, $setDate, $date);
+        } elseif(isset($_POST["major_to_delete"])){
+            deleteMajor($conn, $_POST["major_to_delete"]);
         }
     }
 
-    $currentPage = isset($_GET['page_index']) ? (int)$_GET['page_index'] : 1;;
+    $currentPage = isset($_GET['page_index']) && $_GET['page_index'] > 0 ? (int)$_GET['page_index'] : 1;;
     $itemPerPage = 8;
     $offset = ($currentPage - 1) * $itemPerPage;
 
@@ -381,6 +413,7 @@
                     <th>Ngày kết thúc nộp đơn</th>
                     <th style="width: 120px">Thêm khối</th>
                     <th style="width: 120px">Xóa khối</th>
+                    <th>Xóa ngành</th>
                 </tr>
             </thead>
             <tbody>
@@ -390,7 +423,7 @@
                         renderMajorRow($row);
                     }
                 } else {
-                    echo "<tr><td colspan='5' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
+                    echo "<tr><td colspan='8' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
                 }
                 ?>
             </tbody>

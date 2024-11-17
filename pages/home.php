@@ -170,7 +170,7 @@
         $filter_by_applied = $queryOption["filter_by_applied"];
     }
     
-    $currentPage = isset($_GET['page_index']) ? (int)$_GET['page_index'] : 1;;
+    $currentPage = isset($_GET['page_index']) && $_GET['page_index'] > 0 ? (int)$_GET['page_index'] : 1;;
     $itemPerPage = 6;
     $offset = ($currentPage - 1) * $itemPerPage;
 

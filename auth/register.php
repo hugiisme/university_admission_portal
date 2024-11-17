@@ -58,6 +58,7 @@
         $createUserQuery = "INSERT INTO users (username, password, role, name, email) VALUES ('$username', '$hashedPassword', '$role', '$name', '$email')";
         if (mysqli_query($conn, $createUserQuery)) {
             add_notification("Đăng ký thành công", 3000, "success");
+            header("Location: login.php");
             return true;
         } else {
             add_notification("Đăng ký thất bại", 3000, "error");

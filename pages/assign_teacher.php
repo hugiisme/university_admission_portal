@@ -200,7 +200,7 @@
 
     }
 
-    $currentPage = isset($_GET['page_index']) ? (int)$_GET['page_index'] : 1;;
+    $currentPage = isset($_GET['page_index']) && $_GET['page_index'] > 0 ? (int)$_GET['page_index'] : 1;;;
     $itemPerPage = 10;
     $offset = ($currentPage - 1) * $itemPerPage;
 
