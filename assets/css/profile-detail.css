@@ -1,0 +1,15 @@
+.profile-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-info{
+    border: 1px solid black;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

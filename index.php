@@ -1,5 +1,5 @@
 <?php
-    include_once("includes/session.php");
+    include_once("auth/session.php");
     include_once("includes/add_notification.php");
     include_once("includes/display_notifications.php");
     if(isset($_GET["page"])){
@@ -33,6 +33,18 @@
             $title = "Tài khoản";
             $content = "pages/account_detail.php";
             break;
+        case "assign_teacher":
+            $title = "Phân ngành giáo viên";
+            $content = "pages/assign_teacher.php";
+            break;
+        case "major_management":
+            $title = "Quản lý ngành";
+            $content = "pages/major_management.php";
+            break;
+        case "block_management":
+            $title = "Quản lý khối";
+            $content = "pages/block_management.php";
+            break;    
         default: // luôn về trang chủ nếu không tìm thấy trang
             $title = "Trang chủ";
             $content = "pages/home.php";
@@ -49,11 +61,14 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/notification.css">
     <link rel="stylesheet" href="assets/css/navigation.css">
-    <link rel="stylesheet" href="assets/css/home.css">
-    <link rel="stylesheet" href="assets/css/submit-profile.css">
-    <link rel="stylesheet" href="assets/css/account-info.css">
+    
+    
+    
+    <link rel="stylesheet" href="assets/css/pagination.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="assets/js/notification.js" defer></script>
     <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/toggle-password.js"></script>
 </head>
 <body>
     <div class="container">

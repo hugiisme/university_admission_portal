@@ -1,16 +1,17 @@
+<link rel="stylesheet" href="assets/css/submit-profile.css">
 <?php
-    include_once("includes/session.php");
+    include_once("auth/session.php");
 ?>
 <main>    
     <?php 
         $user_role = $_SESSION["role"];
         switch ($user_role) {
             case 'student':
-                include_once("pages/submit_profile_student.php");
+                include_once("pages/application_form.php");
                 break;
             case 'teacher':
             case "admin":
-                include_once("pages/submit_profile_not_student.php");
+                include_once("pages/applications_statistic.php");
                 break;
             default:
                 header("Location: index.php");

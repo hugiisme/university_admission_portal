@@ -9,4 +9,5 @@
         die("Không thể kết nối với cơ sở dữ liệu: " . mysqli_connect_error());
         exit();
     }
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
 ?>

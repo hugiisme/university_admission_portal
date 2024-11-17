@@ -44,6 +44,7 @@ main {
 }
 
 .neutral-button {
+    border: 1px solid black;
     background-color: white;
     color: black;
 }
@@ -88,6 +89,61 @@ button {
     transform: scale(1.05);
 }
 
+.bottom-cards-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.bottom-card-button {
+    flex: 1;  
+}
+
 .info {
     font-weight: bold;
+}
+
+.query-option-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0px;
+}
+
+.query-option-input {
+    display: flex;
+    justify-content: space-between;
+}
+
+.filter-sort-option{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.total-result {
+    margin-bottom: 5px;
+}
+
+.warning {
+    color: red;
+}
+
+.search-container {
+    display: flex;
+    /* gap: 10px; */
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table, th, tr, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 10px;
 }

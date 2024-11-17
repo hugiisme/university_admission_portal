@@ -11,6 +11,7 @@
     color: white;
     font-size: xx-large;
     margin: 40px 20px;
+    text-align: center;
 }
 
 .menu {
@@ -38,7 +39,7 @@
 }
 
 .nav-a:hover, .menu-item.active .nav-a {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 .logout-btn {
@@ -55,13 +56,14 @@
 }
 
 .logout-btn:hover {
-    background-color: tomato;
+    background-color: #c00000;
 }
 
 .submenu {
     display: none;
     padding-left: 20px;
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.6);  /* Slightly lighter for better contrast */
+    transition: display 0.2s ease, background-color 0.2s ease;
 }
 
 .menu-item:hover > .submenu,
@@ -72,5 +74,3 @@
 .menu-item:hover > .nav-a {
     background-color: rgba(255, 255, 255, 0.45);
 }
-
-/* TODO: sửa lại menu-item thành bo tròn, sẽ có các vấn đề khác nảy sinh, biến .sidebar thành responsive */

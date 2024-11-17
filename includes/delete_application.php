@@ -9,7 +9,7 @@
         $getImagePathResult = mysqli_query($conn, $getImagePathQuery);
         if ($getImagePathResult && mysqli_num_rows($getImagePathResult) > 0) {
             $imagePathRow = mysqli_fetch_assoc($getImagePathResult);
-            $imagePath = "../uploads/" . $imagePathRow['profile_picture'];
+            $imagePath = "../uploads/application_images/" . $imagePathRow['profile_picture'];
 
             if (file_exists($imagePath)) {
                 unlink($imagePath); 

@@ -2,6 +2,11 @@
     include_once("../config/database.php");
     header('Content-Type: application/json');
 
+    if($_SESSION["role"] == "student"){
+        header("Location: index.php");
+        exit();
+    }
+
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['major_id'])) {
         $majorId = intval($_POST['major_id']);
 
@@ -19,5 +24,4 @@
         echo json_encode(['success' => false]);
     }
 
-    // TODO: merge with delete_major file
 ?>

@@ -1,0 +1,12 @@
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.pagination-select {
+    padding: 5px;
+    overflow-y: auto;
+}
+

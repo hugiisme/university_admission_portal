@@ -42,22 +42,6 @@
     color: white;
 }
 
-.warning {
-    color: tomato;
-    text-align: center;
-}
-
-.search-sort-filter-form {
-    margin: 20px 0px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.sort-filter {
-    display: flex;
-    gap: 20px;
-}
-
 .application-card {
     position: relative;
 }
@@ -69,21 +53,4 @@
     border: none;
     font-size: large;
     padding: 4px;
-    color: white;
-    background-color: tomato;
 }
-
-.delete-application-button:hover {
-    background-color: red;
-}
-
-.application-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-}
-
-.application-btn {
-    flex-grow: 1;
-}
-

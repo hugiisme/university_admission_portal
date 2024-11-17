@@ -1,7 +1,69 @@
-<?php 
-    include_once("../config/database.php"); 
+<?php
+    include_once("../config/database.php");
     include_once("../includes/add_notification.php");
     include_once("../includes/display_notifications.php");
+
+    function validate_input($data, &$error, $field_name, $empty_message) {
+        if (empty($data)) {
+            $error = $empty_message;
+            add_notification($error, 3000, "error");
+            return false;
+        }
+        return true;
+    }
+
+    function validate_email($email, &$error) {
+        if (empty($email)) {
+            $error = "Chưa nhập email";
+            add_notification($error, 3000, "error");
+            return false;
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Email không hợp lệ";
+            add_notification($error, 3000, "error");
+            return false;
+        }
+        return true;
+    }
+
+    function validate_password($password, $password_confirmation, &$error) {
+        if (empty($password)) {
+            $error = "Chưa nhập mật khẩu";
+            add_notification($error, 3000, "error");
+            return false;
+        }
+        if (empty($password_confirmation)) {
+            $error = "Chưa xác nhận mật khẩu";
+            add_notification($error, 3000, "error");
+            return false;
+        } elseif ($password !== $password_confirmation) {
+            $error = "Mật khẩu không trùng khớp";
+            add_notification($error, 3000, "error");
+            return false;
+        }
+        return true;
+    }
+
+    function check_existing_user($username, $conn, &$error) {
+        $sameNameQuery = "SELECT * FROM users WHERE username = '$username'";
+        $sameNameResult = mysqli_query($conn, $sameNameQuery);
+        if (mysqli_num_rows($sameNameResult) > 0) {
+            $error = "Tên đăng nhập đã tồn tại";
+            add_notification($error, 3000, "error");
+            return true;
+        }
+        return false;
+    }
+
+    function create_user($username, $hashedPassword, $role, $name, $email, $conn) {
+        $createUserQuery = "INSERT INTO users (username, password, role, name, email) VALUES ('$username', '$hashedPassword', '$role', '$name', '$email')";
+        if (mysqli_query($conn, $createUserQuery)) {
+            add_notification("Đăng ký thành công", 3000, "success");
+            return true;
+        } else {
+            add_notification("Đăng ký thất bại", 3000, "error");
+            return false;
+        }
+    }
 
     $isValid = true;
     $username_error = "";
@@ -21,58 +83,28 @@
         $password_confirmation = isset($_POST['password_confirmation']) ? trim($_POST['password_confirmation']) : '';
         $role = isset($_POST['role']) ? trim($_POST['role']) : '';
 
-        if (empty($username)){
-            $username_error = "Chưa nhập tên đăng nhập";
-            $isValid = false;
-        }
-        if(empty($name)){
-            $name_error = "Chưa nhập tên người dùng";
-            $isValid = false;
-        }
-        if (empty($email)){
-            $email_error = "Chưa nhập email";
-            $isValid = false;
-        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            $email_error = "Email không hợp lệ";
-            $isValid = false;
-        }
+        $isValid &= validate_input($username, $username_error, "Tên đăng nhập", "Chưa nhập tên đăng nhập");
+        $isValid &= validate_input($name, $name_error, "Tên người dùng", "Chưa nhập tên người dùng");
+        $isValid &= validate_email($email, $email_error);
+        $isValid &= validate_password($password, $password_confirmation, $password_confirmation_error);
+        // &= <=> validate1 && validate2 && validate3...
 
-        if (empty($password)){
-            $password_error = "Chưa nhập mật khẩu";
-            $isValid = false;
-        }
-        if (empty($password_confirmation)){
-            $password_confirmation_error = "Chưa xác nhận mật khẩu";
-            $isValid = false;
-        } elseif ($password_confirmation != $password){
-            $password_confirmation_error = "Mật khẩu không trùng khớp";
-            $isValid = false;
-        }
-
-        if (empty($role)){
+        if (empty($role)) {
             $role_error = "Chưa chọn vai trò";
+            add_notification($role_error, 3000, "error");
             $isValid = false;
         }
 
-        if($isValid){
-            $sameNameQuery = "SELECT * FROM users WHERE username = '$username'";
-            $sameNameResult = mysqli_query($conn, $sameNameQuery);
-            if(mysqli_num_rows($sameNameResult) > 0){
-                $username_error = "Tên đăng nhập đã tồn tại"; 
-            } else {
-                // $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        if ($isValid) {
+            if (!check_existing_user($username, $conn, $username_error)) {
                 $hashedPassword = md5($password);
-                $createUserQuery = "INSERT INTO users (username, password, role, name, email) VALUES ('$username', '$hashedPassword', '$role', '$name', '$email')";
-                if(mysqli_query($conn, $createUserQuery)){
-                    add_notification("Đăng ký thành công", 3000, "success");
-                } else {
-                    add_notification("Đăng ký thất bại", 3000, "error");
-                }
+                create_user($username, $hashedPassword, $role, $name, $email, $conn);
             }
         } else {
             add_notification("Đăng ký thất bại", 3000, "error");
         }
-    }    
+    }
+
     mysqli_close($conn);
 ?>
 <!DOCTYPE html>
@@ -124,7 +156,7 @@
             <i class='bx bx-lock-alt icon' onclick="togglePassword('password-confirmation')"></i>
             <div class="error-message" id="password-confirmation-error"><?php echo $password_confirmation_error; ?></div>
         </div>
-        
+
         <div class="input-container">
             <select name="role" id="role">
                 <option value="" <?php echo empty($role) ? 'selected' : ''; ?>>-- Chọn vai trò của bạn --</option>
@@ -143,7 +175,7 @@
     <div class="notifications">
         <?php display_notifications(); ?>
     </div>
-    
+
     <script src="../assets/js/toggle-password.js"></script>
 </body>
 </html>
