@@ -224,9 +224,29 @@
             exit();
         }
     
-        $updateQuery = "UPDATE majors 
-                        SET $setDate = '$date'
-                        WHERE name = '$major_name'";
+        $query = "SELECT start_date, end_date FROM majors WHERE name = '$major_name'";
+        $result = mysqli_query($conn, $query);
+        if (!$result || mysqli_num_rows($result) == 0) {
+            add_notification("Chuyên ngành không tồn tại!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $row = mysqli_fetch_assoc($result);
+        $startDate = $row['start_date'];
+        $endDate = $row['end_date'];
+    
+        if ($setDate == 'start_date' && strtotime($date) > strtotime($endDate)) {
+            add_notification("Ngày bắt đầu không thể sau ngày kết thúc!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        } elseif ($setDate == 'end_date' && strtotime($date) < strtotime($startDate)) {
+            add_notification("Ngày kết thúc không thể trước ngày bắt đầu!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $updateQuery = "UPDATE majors SET $setDate = '$date' WHERE name = '$major_name'";
     
         if (mysqli_query($conn, $updateQuery)) {
             add_notification("Cập nhật thời gian cho chuyên ngành $major_name thành công!", 5000, "success");
@@ -237,6 +257,7 @@
         }
         exit();
     }
+    
     
     function renderMajorRow($row){
         echo "<tr>";
@@ -383,7 +404,7 @@
                 <div class="filter-by">
                     <label for="filter-by">Lọc theo</label>
                     <select name="filter_by_status" id="filter-by-status" class="filter-by"> 
-                        <option value="">Thời gian</option>
+                        <option value="">Trạng thái</option>
                         <option value="early" <?php echo (isset($_GET['filter_by_status']) && $_GET['filter_by_status'] == 'early') ? "selected" : ''; ?>>Chưa mở</option>
                         <option value="on time" <?php echo (isset($_GET['filter_by_status']) && $_GET['filter_by_status'] == 'on time') ? "selected" : ''; ?>>Đang mở</option>
                         <option value="late" <?php echo (isset($_GET['filter_by_status']) && $_GET['filter_by_status'] == 'late') ? "selected" : ''; ?>>Quá hạn</option>
@@ -413,7 +434,7 @@
                     <th>Ngày kết thúc nộp đơn</th>
                     <th style="width: 120px">Thêm khối</th>
                     <th style="width: 120px">Xóa khối</th>
-                    <th>Xóa ngành</th>
+                    <th style="width: 120px">Xóa ngành</th>
                 </tr>
             </thead>
             <tbody>

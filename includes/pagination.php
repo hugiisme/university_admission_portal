@@ -13,18 +13,18 @@
             if ($buttonType == "prev"){
                 $pageValue = $currentPage - 1;
                 $buttonCondition = $currentPage > 1;
-                $buttonText = "&laquo; Previous";
+                $buttonText = "&laquo; Trang trước";
             } elseif ($buttonType == "next"){
                 $pageValue = $currentPage + 1;
                 $buttonCondition = $currentPage < $totalPages;
-                $buttonText = "Next &raquo;";
+                $buttonText = "Trang tiếp &raquo;";
             }
 
             if ($buttonType == "dropdown"){
                 echo "<select class='pagination-select' onchange='this.form.submit()' name='page_index'>";
                     for ($i = 1; $i <= $totalPages; $i++) {
                         $selected = ($i == $currentPage) ? 'selected' : '';
-                        echo "<option value='$i' $selected>Page $i</option>";
+                        echo "<option value='$i' $selected>Trang $i</option>";
                     }
                 echo "</select>";
             } else {

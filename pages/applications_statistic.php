@@ -5,7 +5,7 @@
     include_once("includes/display_notifications.php");
     include_once("includes/pagination.php");
 
-    if($_SESSION["role"] != "admin"){
+    if($_SESSION["role"] == "student"){
         header("Location: index.php");
         exit();
     }

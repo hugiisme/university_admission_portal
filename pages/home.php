@@ -145,7 +145,9 @@
                     $majorVisibility = $rows["is_shown"] == 0 ? "Hiện" : "Ẩn";
                     $visibilityState = $rows["is_shown"] == 0 ? "is-show-true" : "is-show-false";
                     echo "<button class='bottom-card-button toggle-visibility-button $visibilityState' data-major-id='{$rows["major_id"]}'> $majorVisibility </button>";
-                    echo "<button class='bottom-card-button delete-bottom-card-button negative-button' data-major-id='{$rows["major_id"]}'>Xóa</button>";
+                    if ($_SESSION["role"] == "admin"){
+                        echo "<button class='bottom-card-button delete-bottom-card-button negative-button' data-major-id='{$rows["major_id"]}'>Xóa</button>";
+                    }
                 } elseif($rows["has_application"] == 1) {
                     echo "<button type='button' class='bottom-card-button neutral-button' onclick=\"window.location.href='$location'\">Xem hồ sơ</button>";
                 }
@@ -188,7 +190,7 @@
         <h2 class="query-option-title">Các khóa học</h2>
         <div class="query-option-input">
             <div class="search-by">
-                <label for="search_value">Tìm kiếm tên: </label>
+                <label for="search_value">Tìm kiếm tên ngành: </label>
                 <input type="text" name="search_value" value="<?php echo isset($_GET['search_value']) ? $_GET['search_value'] : ''; ?>">
             </div>
             <div class="filter-sort-option">
@@ -208,7 +210,7 @@
                 <div class="filter-by">
                     <label for="filter_by">Lọc theo</label>
                     <select name="filter_by_status" id="filter-by-status" class="filter-by"> 
-                        <option value="">Thời gian</option>
+                        <option value="">Trạng thái</option>
                         <option value="early" <?php echo (isset($_GET['filter_by_status']) && $_GET['filter_by_status'] == 'early') ? "selected" : ''; ?>>Chưa mở</option>
                         <option value="on time" <?php echo (isset($_GET['filter_by_status']) && $_GET['filter_by_status'] == 'on time') ? "selected" : ''; ?>>Đang mở</option>
                         <option value="late" <?php echo (isset($_GET['filter_by_status']) && $_GET['filter_by_status'] == 'late') ? "selected" : ''; ?>>Quá hạn</option>

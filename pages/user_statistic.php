@@ -165,7 +165,7 @@
     }
 
     $currentPage = isset($_GET['page_index']) && $_GET['page_index'] > 0 ? (int)$_GET['page_index'] : 1;;
-    $itemPerPage = 10;
+    $itemPerPage = 8;
     $offset = ($currentPage - 1) * $itemPerPage;
 
     $userQuery = buildUsersQuery($search_by, $search_value, $sort_by_id, $sort_by_name, $filter_by_role);

@@ -268,7 +268,7 @@
                             renderTeacherRow($row);
                         }
                     } else {
-                        echo "<tr><td colspan='5' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
+                        echo "<tr><td colspan='7' class='warning' style='text-align: center; font-size:larger; font-weight: bold;'>Không có kết quả phù hợp</td></tr>";
                     }
                 ?>
             </tbody>
