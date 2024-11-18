@@ -1,4 +1,8 @@
 <?php 
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
     include_once("auth/session.php");
     include_once("config/database.php");
     include_once("includes/add_notification.php");

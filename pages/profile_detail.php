@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="assets/css/profile-detail.css">
 
 <?php 
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
     include_once("auth/session.php");
     include_once("config/database.php");
     include_once("includes/add_notification.php");
@@ -8,6 +12,7 @@
 
     function getApplicationDetail($conn, $application_id){
         $query = "SELECT 
+                        a.status AS status,
                         a.profile_picture AS profile_picture,
                         u.name AS student_name, 
                         m.name AS major_name, 
@@ -25,9 +30,10 @@
         return $result;
     }
     
-    function renderApplicationDetail($application_id, $student_name, $major_name, $block_name, $profile_picture, $subjects_scores){
+    function renderApplicationDetail($application_id, $student_name, $status, $major_name, $block_name, $profile_picture, $subjects_scores){
         echo "<div>Mã hồ sơ: <span class='info'>" . $application_id . "</span></div>";
         echo "<div>Tên học sinh: <span class='info'>" . htmlspecialchars($student_name) . "</span></div>";
+        echo "<div>Trạng thái xét duyệt: <span class='info'>" . htmlspecialchars($status) . "</span></div>";
         echo "<div>Tên ngành: <span class='info'>" . htmlspecialchars($major_name) . "</span></div>";
         echo "<div>Tên khối xét tuyển: <span class='info'>" . htmlspecialchars($block_name) . "</span></div>";
         foreach ($subjects_scores as $subject_score) {
@@ -69,8 +75,20 @@
                             'subject' => $row['subject_names'],
                             'score' => $row['scores']
                         ];
+
+                        switch($row["status"]){
+                            case "pending":
+                                $status = "Đang chờ duyệt";
+                                break;
+                            case "accepted":
+                                $status = "Đã duyệt";
+                                break;
+                            case "denied":
+                                $status = "Từ chối";
+                                break;
+                        }
                     }
-                    renderApplicationDetail($application_id, $student_name, $major_name, $block_name, $profile_picture, $subjects_scores);
+                    renderApplicationDetail($application_id, $student_name, $status, $major_name, $block_name, $profile_picture, $subjects_scores);
                 } else {
                     echo "Error: " . mysqli_error($conn);
                 }

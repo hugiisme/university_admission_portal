@@ -1,11 +1,13 @@
 <?php
-    include_once("../config/database.php");
-    header('Content-Type: application/json');
-    
-    if($_SESSION["role"] == "student"){
-        header("Location: index.php");
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
         exit();
     }
+    include_once("../config/database.php");
+    header('Content-Type: application/json');
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['application_id'], $_POST['action'])) {
         $application_id = $_POST['application_id']; 

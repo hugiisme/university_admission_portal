@@ -1,4 +1,8 @@
 <?php
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
     include_once("auth/session.php");
     include_once("config/database.php");
     include_once("includes/add_notification.php");
@@ -69,6 +73,7 @@
         $row = mysqli_fetch_assoc($checkResult);
         if($row["role"] == "admin"){
             add_notification("Không thể thay đổi role cho admin khác", 5000, "error");
+            header("Location: " . pageURL());
             exit;
         }
 
@@ -122,11 +127,17 @@
     function deleteUser($conn, $user_id) {
         $user_id = mysqli_real_escape_string($conn, $user_id);
     
-        $checkQuery = "SELECT user_id FROM users WHERE user_id = '$user_id'";
+        $checkQuery = "SELECT user_id, role FROM users WHERE user_id = '$user_id'";
         $checkResult = mysqli_query($conn, $checkQuery);
     
         if (mysqli_num_rows($checkResult) == 0) {
             add_notification("Người dùng với ID $user_id không tồn tại!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+
+        if(mysqli_fetch_assoc($checkResult)["role"] == "admin"){
+            add_notification("Không thể xóa admin khác", 5000, "error");
             header("Location: " . pageURL());
             exit();
         }

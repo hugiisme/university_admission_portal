@@ -1,4 +1,8 @@
 <?php 
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
     include_once("auth/session.php");
     include_once("config/database.php");
     include_once("includes/add_notification.php");
@@ -257,12 +261,46 @@
         }
         exit();
     }
+
+    function updateMajorName($conn, $major_id, $major_new_name) {
+        $major_id = mysqli_real_escape_string($conn, $major_id);
+        $major_new_name = mysqli_real_escape_string($conn, $major_new_name);
     
+        if (empty($major_new_name)) {
+            add_notification("Tên chuyên ngành mới không hợp lệ!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $query = "SELECT * FROM majors WHERE name = '$major_new_name'";
+        $result = mysqli_query($conn, $query);
+        if ($result && mysqli_num_rows($result) > 0) {
+            add_notification("Tên chuyên ngành đã tồn tại!", 5000, "error");
+            header("Location: " . pageURL());
+            exit();
+        }
+    
+        $updateQuery = "UPDATE majors SET name = '$major_new_name' WHERE major_id = $major_id";
+    
+        if (mysqli_query($conn, $updateQuery)) {
+            add_notification("Cập nhật tên chuyên ngành thành công!", 5000, "success");
+            header("Location: " . pageURL());
+        } else {
+            add_notification("Không thể cập nhật tên chuyên ngành. " . mysqli_error($conn), 5000, "error");
+            header("Location: " . pageURL());
+        }
+        exit();
+    }
     
     function renderMajorRow($row){
         echo "<tr>";
             echo "<td>{$row['major_id']}</td>";
-            echo "<td>{$row['major_name']}</td>";
+            echo "<td>
+                    <form method='post' onchange='this.submit()' style='width: 100%'>
+                        <input type='hidden' name='major_id' value='{$row['major_id']}'>
+                        <input type='text' name='major_new_name' value='{$row['major_name']}' style='width: 100%'>
+                    </form>
+                </td>";
             echo "<td>{$row['blocks']}</td>";
             
             echo "<td>
@@ -357,6 +395,8 @@
             updateMajorTime($conn, $major_name, $setDate, $date);
         } elseif(isset($_POST["major_to_delete"])){
             deleteMajor($conn, $_POST["major_to_delete"]);
+        } elseif(isset($_POST["major_new_name"])){
+            updateMajorName($conn, $_POST["major_id"], $_POST["major_new_name"]);
         }
     }
 

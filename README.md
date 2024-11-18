@@ -19,7 +19,7 @@
 
 3. **Import Database:**
    - Mở trình duyệt và truy cập `http://localhost/phpmyadmin`.
-   - Tạo một database mới (ví dụ: `university_admission`).
+   - Tạo một database mới (tên: `university_admission_portal`).
    - Nhấn `Import`, chọn file `.sql` của database từ thư mục project và nhấn `Go`.
 
 ## Tài khoản có sẵn

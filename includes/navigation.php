@@ -1,3 +1,7 @@
+<?php if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    } ?>
 <aside class="sidebar">
     <h1 class="logo">Đăng ký học bạ</h1>
     <nav class="navigation">

@@ -2,6 +2,10 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
 
     function display_notifications() {
         if (isset($_SESSION['notifications']) && count($_SESSION['notifications']) > 0) {

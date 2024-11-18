@@ -1,5 +1,9 @@
 <?php
     include_once("../config/database.php");
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
     header('Content-Type: application/json');
 
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['application_id'])) {

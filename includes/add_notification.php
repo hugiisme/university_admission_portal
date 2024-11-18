@@ -2,7 +2,10 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    
+    if (!isset($_GET["page"])){
+        header("Location: ../index.php");
+        exit();
+    }
 
     function add_notification($message, $timeout = 5000, $type = 'info') {
         if (!isset($_SESSION['notifications'])) {
