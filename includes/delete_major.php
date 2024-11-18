@@ -1,9 +1,6 @@
 <?php
     include_once("../config/database.php");
-    if (!isset($_GET["page"])){
-        header("Location: ../index.php");
-        exit();
-    }
+    
 
     if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['major_id'])) {
         $majorId = intval($_POST['major_id']);

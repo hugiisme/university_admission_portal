@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="assets/css/submit-profile.css">
 <?php
-    if (!isset($_GET["page"])){
-        header("Location: ../index.php");
-        exit();
-    }
+    
     include_once("auth/session.php");
 ?>
 <main>    

@@ -1,8 +1,5 @@
 <?php 
-    if (!isset($_GET["page"])){
-        header("Location: ../index.php");
-        exit();
-    }
+    
     function generateHiddenFields($excludeKey = '') {
         foreach ($_GET as $key => $value) {
             if ($key != $excludeKey) {
