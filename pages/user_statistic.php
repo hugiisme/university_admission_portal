@@ -69,7 +69,7 @@
         $checkResult = mysqli_query($conn, $checkQuery);
         $row = mysqli_fetch_assoc($checkResult);
         if($row["role"] == "admin"){
-            add_notification("Không thể thay đổi role cho admin khác", 5000, "error");
+            add_notification("Không thể thay đổi role cho admin", 5000, "error");
             header("Location: " . pageURL());
             exit;
         }
@@ -134,7 +134,7 @@
         }
 
         if(mysqli_fetch_assoc($checkResult)["role"] == "admin"){
-            add_notification("Không thể xóa admin khác", 5000, "error");
+            add_notification("Không thể xóa admin", 5000, "error");
             header("Location: " . pageURL());
             exit();
         }
