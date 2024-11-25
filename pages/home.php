@@ -142,14 +142,12 @@
                 echo "<button type='button'  class='bottom-card-button positive-button $submitButtonClass' onclick=\"window.location.href='$location'\" " . ($submitProfileAbility ? "disabled" : "") . ">$submitButtonText</button>";
                 
                 
-                if ($_SESSION["role"] != "student") {
+                if ($_SESSION["role"] == "admin") {
                     $majorVisibility = $rows["is_shown"] == 0 ? "Hiện" : "Ẩn";
                     $visibilityState = $rows["is_shown"] == 0 ? "is-show-true" : "is-show-false";
                     echo "<button class='bottom-card-button toggle-visibility-button $visibilityState' data-major-id='{$rows["major_id"]}'> $majorVisibility </button>";
-                    if ($_SESSION["role"] == "admin"){
-                        echo "<button class='bottom-card-button delete-bottom-card-button negative-button' data-major-id='{$rows["major_id"]}'>Xóa</button>";
-                    }
-                } elseif($rows["has_application"] == 1) {
+                    echo "<button class='bottom-card-button delete-bottom-card-button negative-button' data-major-id='{$rows["major_id"]}'>Xóa</button>";
+                } elseif($_SESSION["role"] == "student" && $rows["has_application"] == 1) {
                     echo "<button type='button' class='bottom-card-button neutral-button' onclick=\"window.location.href='$location'\">Xem hồ sơ</button>";
                 }
             echo '</div>';

@@ -41,20 +41,43 @@
 
 ## Mô tả các trang
 
-### 1. Trang Đăng Ký
-- **Chức năng chính:**  
-  Hiển thị form để người dùng tạo tài khoản mới (username, tên, email, mật khẩu, xác nhận mật khẩu).  
-  Vai trò mặc định là học sinh (admin có thể chỉnh sửa vai trò sau).
+## Trang Đăng ký
 
-- **Xử lý:**
-  - Kiểm tra nhập thiếu thông tin, định dạng email, xác nhận mật khẩu không khớp.
-  - Mã hóa mật khẩu trước khi lưu.
-  - Hiển thị thông báo lỗi hoặc thành công.
+### 1) Chức năng:
+- **Đăng ký thông tin người dùng**:
+  - Cho phép người dùng nhập: 
+    - Tên đăng nhập
+    - Tên người dùng
+    - Email
+    - Mật khẩu
+    - Xác nhận mật khẩu
+    - Vai trò (người dùng chọn)
+- **Hiển thị thông báo**:
+  - Thông báo lỗi nếu có vấn đề xảy ra.
+  - Thông báo thành công khi đăng ký hoàn tất.
+- **Ẩn/Hiện mật khẩu**:
+  - Cung cấp nút để ẩn/hiện nội dung của trường mật khẩu.
+- **Điều hướng**:
+  - Nút chuyển hướng sang trang đăng nhập.
+  - Tự động điều hướng sang trang đăng nhập sau khi đăng ký thành công.
+- **Mã hóa mật khẩu**:
+  - Mật khẩu được mã hóa trước khi lưu trữ.
 
-- **Chức năng phụ:**
-  - Nút điều hướng sang trang đăng nhập.
-  - Bật/tắt xem trước mật khẩu.
-
+### 2) Xử lý:
+- **Xử lý thông tin đầu vào**:
+  - Kiểm tra người dùng đã nhập đầy đủ các trường:
+    - Tên người dùng
+    - Tên đăng nhập
+    - Email
+    - Mật khẩu
+    - Xác nhận mật khẩu
+    - Vai trò
+- **Tên đăng nhập đã tồn tại**:
+  - Kiểm tra và thông báo nếu tên đăng nhập đã được sử dụng.
+- **Email không hợp lệ**:
+  - Xác nhận email đúng định dạng trước khi xử lý.
+- **Mật khẩu không khớp**:
+  - Kiểm tra và thông báo nếu mật khẩu và xác nhận mật khẩu không trùng khớp.
 ---
 
 ### 2. Trang Đăng Nhập

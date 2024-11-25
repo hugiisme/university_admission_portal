@@ -312,7 +312,7 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` enum('admin','teacher','student') NOT NULL,
+  `role` enum('admin','teacher','student') NOT NULL DEFAULT 'student',
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `avatar` varchar(255) DEFAULT NULL

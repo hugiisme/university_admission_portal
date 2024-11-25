@@ -2,8 +2,8 @@
     
     include_once("auth/session.php");
     include_once("config/database.php");
-    include_once("includes/add_notification.php");
-    include_once("includes/display_notifications.php");
+    // include_once("includes/add_notification.php");
+    // include_once("includes/display_notifications.php");
     include_once("includes/pagination.php");
 
     if($_SESSION["role"] == "student"){
@@ -27,20 +27,20 @@
 
     function buildApplicationQuery($major_id, $search_by, $search_value, $sort_by_major_name, $sort_by_student_name, $sort_by_verifier_name, $sort_by_application_id, $filter_by_status, $filter_by_blocks) {
         $query = "SELECT 
-                                a.application_id,
-                                m.name AS major_name,
-                                s.name AS student_name,
-                                b.code AS block_code,
-                                IFNULL(v.name, 'Chưa có') AS verifier_name,
-                                IFNULL(v.user_id, '0') AS verifier_id,
-                                a.status
-                            FROM applications a
-                            JOIN users s ON a.student_id = s.user_id
-                            JOIN majors m ON a.major_id = m.major_id
-                            JOIN blocks b ON a.block_id = b.block_id
-                            LEFT JOIN users v ON a.verifier_id = v.user_id
-                            LEFT JOIN major_teachers mt ON mt.major_id = m.major_id
-                            WHERE 1=1";
+                    a.application_id,
+                    m.name AS major_name,
+                    s.name AS student_name,
+                    b.code AS block_code,
+                    IFNULL(v.name, 'Chưa có') AS verifier_name,
+                    IFNULL(v.user_id, '0') AS verifier_id,
+                    a.status
+                FROM applications a
+                JOIN users s ON a.student_id = s.user_id
+                JOIN majors m ON a.major_id = m.major_id
+                JOIN blocks b ON a.block_id = b.block_id
+                LEFT JOIN users v ON a.verifier_id = v.user_id
+                LEFT JOIN major_teachers mt ON mt.major_id = m.major_id
+                WHERE 1=1";
         if ($major_id) {
             $query .= " AND a.major_id = $major_id";
         }
@@ -133,8 +133,8 @@
             echo "<div> Tên người xét duyệt: <span class='info'>" . $applicationRows["verifier_name"] . "</span></div>";          
 
             echo "<div class='bottom-cards-container'>";
-                $acceptButtonDisabled = $applicationRows["status"] == "accepted" ; // || $applicationRows["verifier_id"] != $_SESSION["user_id"]
-                $denyButtonDisabled = $applicationRows["status"] == "denied" ; // || $applicationRows["verifier_id"] != $_SESSION["user_id"]
+                $acceptButtonDisabled = $applicationRows["status"] == "accepted" ; 
+                $denyButtonDisabled = $applicationRows["status"] == "denied" ; 
 
                 $disableAcceptButton = $acceptButtonDisabled ? "disabled" : '';
                 $disableDenyButton = $denyButtonDisabled ? "disabled" : '';
