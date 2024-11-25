@@ -51,7 +51,7 @@
     - Email
     - Mật khẩu
     - Xác nhận mật khẩu
-    - Vai trò (người dùng chọn)
+    - Vai trò (người dùng chọn, nếu cần thiết có thể bỏ mục này vì admin có thể thay đổi role cho người dùng sau khi đăng ký) 
 - **Hiển thị thông báo**:
   - Thông báo lỗi nếu có vấn đề xảy ra.
   - Thông báo thành công khi đăng ký hoàn tất.
