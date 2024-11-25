@@ -110,8 +110,6 @@
 - **Kiểm tra phiên đăng nhập**:
   - Nếu người dùng chưa đăng nhập, tự động chuyển hướng về trang Đăng nhập.
 
----
-
 ### 1) Admin:
 #### Chức năng:
 1. **Hiển thị thông tin ngành**:
@@ -143,8 +141,6 @@
    - Hiển thị tổng số kết quả sau khi áp dụng bộ lọc và sắp xếp.
    - Nếu không có kết quả nào, hiển thị: "Không tìm thấy kết quả nào."
 
----
-
 ### 2) Giáo viên:
 #### Chức năng:
 1. **Hiển thị thông tin ngành**:
@@ -171,8 +167,6 @@
 7. **Hiển thị tổng số kết quả**:
    - Hiển thị tổng số kết quả sau khi áp dụng bộ lọc và sắp xếp.
    - Nếu không có kết quả nào, hiển thị: "Không tìm thấy kết quả nào."
-
----
 
 ### 3) Học sinh:
 #### Chức năng:
@@ -215,8 +209,6 @@
 ## Xử lý phiên
 - Nếu người dùng chưa đăng nhập thì chuyển hướng về trang đăng nhập.
 
----
-
 ## 1) Admin
 
 ### a) Chức năng:
@@ -242,8 +234,6 @@
 6. **Chia trang:** Giới hạn số kết quả hiển thị trên một trang.
 7. **Thông báo tổng số kết quả:**  
    - Nếu không có kết quả: Hiển thị **"Không tìm thấy kết quả nào."**
-
----
 
 ## 2) Giáo viên
 
@@ -273,8 +263,6 @@
 ### b) Xử lý:
 1. Nếu người dùng cố tình truy cập vào ngành không được phân qua `major_id` trên URL sẽ hiển thị **"Không tìm thấy kết quả nào."**
 
----
-
 ## 3) Học sinh
 
 ### a) Chức năng:
@@ -301,8 +289,6 @@
 ## Xử lý phiên
 - Nếu người dùng chưa đăng nhập, chuyển hướng về trang **đăng nhập**.
 
----
-
 ## Hiển thị thông tin hồ sơ
 1. **Mã hồ sơ**  
 2. **Tên học sinh**  
@@ -323,8 +309,6 @@
 ## Xử lý phiên
 - Nếu người dùng chưa đăng nhập, chuyển hướng về trang **đăng nhập**.
 
----
-
 ## Hiển thị nội dung
 - **Trang thực chất là "Trang Nộp Hồ Sơ Chi Tiết"**, nhưng:
   - **Admin** và **giáo viên**:
@@ -340,8 +324,6 @@
 - Nếu người dùng chưa đăng nhập, chuyển hướng về trang **đăng nhập**.
 - Nếu người dùng không phải **admin**, chuyển hướng về **trang chủ**.
 
----
-
 ## Hiển thị bảng người dùng
 - Các cột thông tin:
   1. **STT**  
@@ -351,8 +333,6 @@
   5. **Vai trò** (có thể thay đổi qua selection dropdown)  
   6. **Nút xóa người dùng**  
 
----
-
 ## Quy định chức năng
 - **Thay đổi vai trò người dùng**:
   - Sử dụng dropdown trong cột vai trò.
@@ -361,7 +341,6 @@
   - Sử dụng nút trong cột xóa.
   - **Không thể xóa admin**.
 
----
 
 ## Tìm kiếm, sắp xếp và lọc
 - **Tìm kiếm theo**:
@@ -373,8 +352,6 @@
 - **Lọc theo**:
   - Vai trò  
 
----
-
 ## Hiển thị kết quả
 - **Chia trang**:
   - Giới hạn số kết quả hiển thị trên 1 trang.
@@ -383,7 +360,6 @@
   - Nếu không có kết quả, hiển thị thông báo:  
     `"Không có kết quả phù hợp"`.
 
-
 ---
 
 # Trang Phân Ngành Giáo Viên
@@ -391,8 +367,6 @@
 ## Xử lý phiên
 - Nếu người dùng **chưa đăng nhập**, chuyển hướng về trang **đăng nhập**.
 - Nếu người dùng **không phải admin**, chuyển hướng về **trang chủ**.
-
----
 
 ## Hiển thị bảng giáo viên
 ### Các cột thông tin
@@ -405,8 +379,6 @@
    - Cho phép gõ tên ngành để thêm ngành phân công cho giáo viên.  
 6. **Cột ngành muốn xóa**:  
    - Cho phép gõ tên ngành để xóa ngành đã được phân công.
-
----
 
 ## Quy định chức năng
 ### Phân công ngành
@@ -424,8 +396,6 @@
   - **Xử lý lỗi**:  
     - Nếu **ngành chưa được phân công**, hiển thị thông báo:  
       `"Ngành này chưa được phân công cho giáo viên."`.
-
----
 
 ## Hiển thị kết quả
 - **Thông báo**:
@@ -449,8 +419,6 @@
 ## Xử lý phiên
 - Nếu người dùng **chưa đăng nhập**, chuyển hướng về trang **đăng nhập**.  
 - Nếu người dùng **không phải admin**, chuyển hướng về **trang chủ**.  
-
----
 
 ## Hiển thị bảng các ngành
 ### Các cột thông tin
@@ -484,8 +452,6 @@
 6. **Cột Xóa Ngành**  
    - Nút xóa ngành tương ứng với mỗi ngành.  
 
----
-
 ## Chức năng khác
 ### Tạo ngành mới
 - Nhập thông tin ngành mới và xác nhận.  
@@ -509,27 +475,21 @@
 ### Chia trang
 - Giới hạn số kết quả hiển thị trên 1 trang.  
 
----
 
 ## Hiển thị kết quả
 - Hiển thị tổng số kết quả sau khi đã lọc và sắp xếp.  
 - Nếu không có kết quả nào, hiển thị thông báo:  
   `"Không có kết quả phù hợp."`.  
 
----
-
 ## Thông báo
 - Hiển thị thông báo **thành công/lỗi** cho các thao tác thêm, xóa, chỉnh sửa.  
 
----
 
 # Trang Quản Lý Khối
 
 ## Xử lý phiên
 - Nếu người dùng **chưa đăng nhập**, chuyển hướng về trang **đăng nhập**.  
 - Nếu người dùng **không phải admin**, chuyển hướng về **trang chủ**.  
-
----
 
 ## Hiển thị bảng các khối
 ### Các cột thông tin
@@ -551,8 +511,6 @@
 6. **Xóa khối**  
    - Nút xóa khối tương ứng cho mỗi khối.  
 
----
-
 ## Chức năng khác
 ### Tạo khối mới
 - Nhập thông tin mã khối và xác nhận.
@@ -573,14 +531,10 @@
 ### Chia trang
 - Giới hạn số kết quả hiển thị trên 1 trang.  
 
----
-
 ## Hiển thị kết quả
 - Hiển thị tổng số kết quả sau khi đã lọc và sắp xếp.  
 - Nếu không có kết quả nào, hiển thị thông báo:  
   `"Không có kết quả phù hợp."`.  
-
----
 
 ## Thông báo
 - Hiển thị thông báo **thành công/lỗi** cho các thao tác thêm, xóa môn học, tạo mới, và xóa khối.  
@@ -588,8 +542,6 @@
 
 ---
 # Trang Tài Khoản
-
----
 
 ## Hiển thị Hồ sơ Người Dùng
 ### Thông tin bao gồm:
@@ -603,7 +555,6 @@
 ### Thông báo:
 - Hiển thị **thông báo thành công/lỗi** khi thực hiện các thao tác.
 
----
 
 ## Các Form và Chức Năng
 
@@ -624,8 +575,6 @@
   - Dung lượng file lớn hơn **5MB**.  
   - Hiển thị thông báo: `"Ảnh không hợp lệ hoặc vượt quá giới hạn dung lượng."`.
 
----
-
 ### 2. **Đổi Mật Khẩu**
 #### Nội dung:
 - **Mật khẩu cũ**  
@@ -638,8 +587,6 @@
 - **Chưa nhập đủ thông tin**: Hiển thị thông báo `"Vui lòng điền đầy đủ thông tin."`.
 - **Xác nhận mật khẩu mới không trùng khớp**: Hiển thị thông báo `"Xác nhận mật khẩu không khớp."`.
 
----
-
 ### 3. **Xóa Tài Khoản**
 #### Nội dung:
 - **Xác nhận mật khẩu**: Yêu cầu nhập mật khẩu hiện tại.
@@ -648,8 +595,6 @@
 #### Xử lý:
 - **Nhập sai mật khẩu**: Hiển thị thông báo `"Mật khẩu không chính xác."`.
 - **Chưa nhập đủ thông tin**: Hiển thị thông báo `"Vui lòng điền đầy đủ thông tin."`.
-
----
 
 ## Thông báo
 - **Thành công**: Hiển thị thông báo `"Thay đổi thành công."`, `"Xóa tài khoản thành công."`, hoặc thông báo tương tự.  
