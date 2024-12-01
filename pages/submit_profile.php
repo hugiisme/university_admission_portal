@@ -15,7 +15,7 @@
                 include_once("pages/applications_statistic.php");
                 break;
             default:
-                header("Location: index.php");
+                header("Location: ../index.php");
                 break;
         }
     ?>

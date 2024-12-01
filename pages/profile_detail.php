@@ -45,7 +45,7 @@
     $application_id = $_POST["application_id"] ?? '';
     if(!$application_id){
         add_notification("Hồ sơ không tồn tại", 5000, "error");
-        header("Location: index.php");
+        header("Location: ../index.php");
     } else {
         $result = getApplicationDetail($conn, $application_id);
         

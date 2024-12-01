@@ -7,7 +7,7 @@
     include_once("includes/pagination.php");
 
     if($_SESSION["role"] == "student"){
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit();
     }
 
